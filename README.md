@@ -7,7 +7,7 @@ Clone both packages to your workspace and then build them using:
 ```
 catkin build
 ```
------------------------------------------------------------------------------------------------------------------
+----
 ## Packages Description:
 
 ### [scene_creation](scene_creation):
@@ -19,17 +19,19 @@ The scene obstacles yaml file is passed in a parameter in the last line of the [
 <!-- Select the path to the wanted scene -->
 <param name="scene_file" type="string" value="$(find scene_creation)/config/example_scene.yaml" />
 ```
------------------------------------------------------------------------------------------------------------------
+----
 #### Important Note:
 ***Scene files also include the start and goal position of the motion planning algorithm.***
------------------------------------------------------------------------------------------------------------------
+
+----
 
 
 To launch the scene and visualize it in RViz simply use the following command after sourcing your workspace:
 ```
 roslaunch scene_creation create_scene.launch
 ```
------------------------------------------------------------------------------------------------------------------
+----
+
 ### [ompl_planners](ompl_planners):
 This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html).
 
@@ -50,7 +52,8 @@ Currently developed planners are:
 |LBKPIECE     |LBKPIECE.launch    |
 
 </div>
------------------------------------------------------------------------------------------------------------------
+
+----
 To launch a specific planner use the following command after sourcing your workspace:
 ```
 roslaunch ompl_planners <your launch file>
@@ -59,7 +62,8 @@ roslaunch ompl_planners <your launch file>
 ```
 roslaunch ompl_planners RRT.launch
 ```
------------------------------------------------------------------------------------------------------------------
+
+----
 ## Next Steps:
 1. Implement three separate packages for STOMP, CHOMP and Motion planning in microseconds.
 2. Update scene parsing to visualize dynamic obstacles
