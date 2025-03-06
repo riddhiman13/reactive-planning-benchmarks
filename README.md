@@ -4,6 +4,6 @@ These nodes are developed and tested on Ubuntu 20.04.6 (Focal Fossa), ROS Noetic
 
 ## Installation:
 Clone both packages to your workspace and then build them using:
-'''
+```
 catkin build
-'''
+```
