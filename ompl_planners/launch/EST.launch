@@ -1,0 +1,21 @@
+<launch>
+    <node name="ompl_planner" pkg="ompl_planners" type="ompl_planner" output="screen" />
+    <param name="default_planner_config" value="ESTkConfigDefault" />
+</launch>
+
+
+
+<!--
+
+Planner Name	ID in MoveIt
+PRM	            "PRMkConfigDefault"
+RRT	            "RRTkConfigDefault"
+RRT*	        "RRTstarkConfigDefault"
+RRTConnect	    "RRTConnectkConfigDefault"
+LazyPRM	        "LazyPRMkConfigDefault"
+LazyRRT*	    "LazyRRTstarkConfigDefault"
+EST	            "ESTkConfigDefault"
+KPIECE	        "KPIECEkConfigDefault"
+BKPIECE	        "BKPIECEkConfigDefault"
+LBKPIECE	    "LBKPIECEkConfigDefault"-->
+
