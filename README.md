@@ -19,9 +19,8 @@ The scene obstacles yaml file is passed in a parameter in the last line of the [
 <!-- Select the path to the wanted scene -->
 <param name="scene_file" type="string" value="$(find scene_creation)/config/example_scene.yaml" />
 ```
-<p align=center>
 ***Scene files also include the start and goal position of the motion planning algorithm.***
-</p>
+
 
 
 To launch the scene and visualize it in RViz simply use the following command after sourcing your workspace:
