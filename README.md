@@ -30,7 +30,7 @@ roslaunch scene_creation create_scene.launch
 ```
 
 ### [ompl_planners](ompl_planners):
-This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the (OMPL planners)[https://ompl.kavrakilab.org/planners.html].
+This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html).
 
 Currently developed planners are:
 <div align="center">
