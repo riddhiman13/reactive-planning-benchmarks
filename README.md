@@ -19,7 +19,7 @@ The scene obstacles yaml file is passed in a parameter in the last line of the [
 <!-- Select the path to the wanted scene -->
 <param name="scene_file" type="string" value="$(find scene_creation)/config/example_scene.yaml" />
 ```
-####Important Note:
+#### Important Note:
 ***Scene files also include the start and goal position of the motion planning algorithm.***
 
 
