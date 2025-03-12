@@ -45,13 +45,6 @@ The scene obstacles yaml file is passed in a parameter in the last line of the c
 
 ----
 
-
-To launch the scene and visualize it in RViz simply use the following command after sourcing your workspace:
-```
-roslaunch scene_creation create_scene.launch
-```
-----
-
 ### [planners](planners):
 This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html) and [STOMP Planner](https://wiki.ros.org/stomp_motion_planner)
 
