@@ -70,11 +70,5 @@
     </include>
 
     <!-- Launch RViz with a pre-configured file -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scene_creation)/config/panda_planning.rviz" />
-
-    <!-- Launch Scene Creation node -->
-    <node name="scene_creation_node" pkg="scene_creation" type="scene_creation_node" output="screen" />
-
-    <!-- Select the path to the wanted scene -->
-    <param name="scene_file" type="string" value="$(find scene_creation)/config/example_scene.yaml" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scene_creation)/config/franka_planning.rviz" />
 </launch>

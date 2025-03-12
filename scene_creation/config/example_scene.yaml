@@ -117,9 +117,9 @@ start_pose:
 
 goal_pose:
   position:
-    x: 0.55
-    y: 0.0
-    z: 0.4
+    x: 0.3
+    y: -0.2
+    z: 0.3
   orientation:
     x: 0.0
     y: 0.0
