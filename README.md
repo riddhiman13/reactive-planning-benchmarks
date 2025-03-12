@@ -54,8 +54,8 @@ Currently developed planners are:
 |Planner      | Launch File       |
 |:-----------:|:-----------------:|
 |RRT          |RRT.launch         |
-|RRT Connect  |RRT_Connect.launch |
-|RRT Star     |RRT_Star.launch    |
+|RRT Connect  |RRTConnect.launch |
+|RRT Star     |RRTstar.launch    |
 |PRM          |PRM.launch         |
 |Lazy PRM     |LazyPRM.launch     |
 |EST          |EST.launch         |
