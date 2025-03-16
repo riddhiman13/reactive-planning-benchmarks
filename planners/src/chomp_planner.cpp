@@ -46,7 +46,6 @@ int main(int argc, char** argv) {
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     const moveit::core::JointModelGroup* joint_model_group = move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
     
-
     // Load Robot Model
     robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
     robot_model::RobotModelPtr kinematic_model = robot_model_loader.getModel();
@@ -67,7 +66,6 @@ int main(int argc, char** argv) {
     geometry_msgs::Pose start_pose, goal_pose;
     loadConfig(yaml_file, start_pose, goal_pose);
 
-
     // Set start pose
     // Solve Inverse Kinematics (IK) to get joint values for the given pose
     bool found_ik = start_state.setFromIK(joint_model_group, start_pose);
@@ -81,7 +79,7 @@ int main(int argc, char** argv) {
         ROS_ERROR("IK solution not found for the given start pose!");
     }
     */
-    move_group.setPoseTarget(goal_pose);
+    move_group.setJointValueTarget(goal_pose);
     
     // Plan a motion
     moveit::planning_interface::MoveGroupInterface::Plan my_plan;

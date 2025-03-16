@@ -2,6 +2,8 @@
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include <moveit_visual_tools/moveit_visual_tools.h>
+#include <moveit/robot_model_loader/robot_model_loader.h>
+#include <moveit/robot_state/robot_state.h>
 #include <yaml-cpp/yaml.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <vector>
@@ -46,6 +48,11 @@ int main(int argc, char** argv) {
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     const moveit::core::JointModelGroup* joint_model_group = move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
     
+    // Load Robot Model
+    robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
+    robot_model::RobotModelPtr kinematic_model = robot_model_loader.getModel();
+    robot_state::RobotState start_state(kinematic_model);
+
     std::string planner_ID;
     std::string yaml_file;
     geometry_msgs::Pose start_pose, goal_pose;
@@ -77,7 +84,18 @@ int main(int argc, char** argv) {
     loadConfig(yaml_file, start_pose, goal_pose);
     
     // Set start pose
-    move_group.setStartStateToCurrentState();
+    // Solve Inverse Kinematics (IK) to get joint values for the given pose
+    bool found_ik = start_state.setFromIK(joint_model_group, start_pose);
+
+    // Remove the following commented section if you want a specific start pose 
+    /*
+    if (found_ik) {
+        // Set the computed start state in MoveGroup
+        move_group.setStartState(start_state);
+    } else {
+        ROS_ERROR("IK solution not found for the given start pose!");
+    }
+    */
     move_group.setPoseTarget(goal_pose);
 
     // Plan to the target pose
