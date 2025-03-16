@@ -86,7 +86,7 @@ In case CHOMP fails on almost every plan please add the following line in the [c
 ```yaml
 collision_checker: FCL
 ```
-This changes the hybrid collision checking method with a the FCL method. Please note that CHOMP isn't perfectly tuned for clustered environments such as the given [example_scene](scene_creation/config/example_scene.yaml) and some intense tuning might be needed to have a functional This is still an open issue in Moveit ROS1 as discussed [here](https://github.com/moveit/moveit/issues/305).
+This changes the hybrid collision checking method with the FCL method. Please note that CHOMP isn't perfectly tuned for clustered environments such as the given [example_scene](scene_creation/config/example_scene.yaml) and some intense tuning might be needed to have a functional This is still an open issue in Moveit ROS1 as discussed [here](https://github.com/moveit/moveit/issues/305).
 
 ----
 
