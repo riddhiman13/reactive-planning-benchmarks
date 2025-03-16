@@ -15,7 +15,7 @@ catkin build
 ### [scene_creation](scene_creation):
 This package is responsible for loading the robot embodiment (in this case, only the Franka Panda; future updates will include other embodiments) and scene obstacles using a [yaml file](scene_creation/config/example_scene.yaml) (currently, static obstacles only are parsed).
 
-Scene initialisation also includes the planning pipeline initialisation i.e (OMPL, STOMP, ..., etc). To start a specific pipeline, launch its corresponding launch file:
+Scene initialisation also includes the planning pipeline initialisation i.e. (OMPL, STOMP, CHOMP). To start a specific pipeline, launch its corresponding launch file:
 
 <div align="center">
   
@@ -23,6 +23,7 @@ Scene initialisation also includes the planning pipeline initialisation i.e (OMP
 |:-----------:|:-------------------------------:|
 |OMPL         |ompl_create_scene.launch         |
 |STOMP        |stomp_create_scene.launch        |
+|CHOMP        |chomp_create_scene.launch        |
 
 </div>
 
@@ -46,7 +47,7 @@ The scene obstacles yaml file is passed in a parameter in the last line of the c
 ----
 
 ### [planners](planners):
-This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html) and [STOMP Planner](https://wiki.ros.org/stomp_motion_planner)
+This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html), [STOMP Planner](https://wiki.ros.org/stomp_motion_planner) and [CHOMP Planner](https://wiki.ros.org/chomp_motion_planner)
 
 Currently developed planners are:
 <div align="center">
@@ -63,6 +64,7 @@ Currently developed planners are:
 |BKPIECE      |BKPIECE.launch     |
 |LBKPIECE     |LBKPIECE.launch    |
 |STOMP        |STOMP.launch    |
+|CHOMP        |CHOMP.launch    |
 
 </div>
 
@@ -77,7 +79,17 @@ roslaunch planners RRT.launch
 ```
 
 ----
+
+## Important Notes:
+### Note 1:
+In case CHOMP fails on almost every plan please add the following line in the [chomp_planning.yaml](https://github.com/moveit/panda_moveit_config/blob/noetic-devel/config/chomp_planning.yaml) file in the [panda_moveit_config](https://github.com/moveit/panda_moveit_config) package.
+```yaml
+collision_checker: FCL
+```
+This changes the hybrid collision checking method with a the FCL method. Please note that CHOMP isn't perfectly tuned for clustered environments such as the given [example_scene](scene_creation/config/example_scene.yaml) and some intense tuning might be needed to have a functional This is still an open issue in Moveit ROS1 as discussed [here](https://github.com/moveit/moveit/issues/305).
+
+----
+
 ## Next Steps:
-1. Implement CHOMP and Motion planning in microseconds.
-2. Update scene parsing to visualize dynamic obstacles
-3. Implement an independent package for metrics evaluation
+1. Update scene parsing to visualize dynamic obstacles
+2. Implement an independent package for metrics evaluation
