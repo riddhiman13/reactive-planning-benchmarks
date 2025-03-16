@@ -15,7 +15,25 @@ catkin build
 ### [scene_creation](scene_creation):
 This package is responsible for loading the robot embodiment (in this case, only the Franka Panda; future updates will include other embodiments) and scene obstacles using a [yaml file](scene_creation/config/example_scene.yaml) (currently, static obstacles only are parsed).
 
-The scene obstacles yaml file is passed in a parameter in the last line of the [create_scene](scene_creation/launch/create_scene.launch) launch file, as shown. You can change the scene by specifying which file path you want. Keep in mind to maintain the same structure of obstacle description to have a proper yaml parsing.
+Scene initialisation also includes the planning pipeline initialisation i.e (OMPL, STOMP, ..., etc). To start a specific pipeline, launch its corresponding launch file:
+
+<div align="center">
+  
+|Pipeline     | Launch File                     |
+|:-----------:|:-------------------------------:|
+|OMPL         |ompl_create_scene.launch         |
+|STOMP        |stomp_create_scene.launch        |
+
+</div>
+
+**For Example:**
+```
+roslaunch scene_creation ompl_create_scene.launch
+```
+
+----
+
+The scene obstacles yaml file is passed in a parameter in the last line of the corresponding **create_scene** launch file, as shown. You can change the scene by specifying which file path you want. Please make sure to keep the same structure of the obstacle description to have proper yaml parsing.
 
 ```xml
 <!-- Select the path to the wanted scene -->
@@ -27,15 +45,8 @@ The scene obstacles yaml file is passed in a parameter in the last line of the [
 
 ----
 
-
-To launch the scene and visualize it in RViz simply use the following command after sourcing your workspace:
-```
-roslaunch scene_creation create_scene.launch
-```
-----
-
-### [ompl_planners](ompl_planners):
-This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html).
+### [planners](planners):
+This package is responsible for planning a collision-free trajectory given the robot, the scene obstacles and the start and goal configuration based on the [OMPL planners](https://ompl.kavrakilab.org/planners.html) and [STOMP Planner](https://wiki.ros.org/stomp_motion_planner)
 
 Currently developed planners are:
 <div align="center">
@@ -43,30 +54,30 @@ Currently developed planners are:
 |Planner      | Launch File       |
 |:-----------:|:-----------------:|
 |RRT          |RRT.launch         |
-|RRT Connect  |RRT_Connect.launch |
-|RRT Star     |RRT_Star.launch    |
-|Lazy RRT Star|LazyRRTStar.launch |
+|RRT Connect  |RRTConnect.launch |
+|RRT Star     |RRTstar.launch    |
 |PRM          |PRM.launch         |
 |Lazy PRM     |LazyPRM.launch     |
 |EST          |EST.launch         |
 |KPIECE       |KPIECE.launch      |
 |BKPIECE      |BKPIECE.launch     |
 |LBKPIECE     |LBKPIECE.launch    |
+|STOMP        |STOMP.launch    |
 
 </div>
 
 ----
 To launch a specific planner use the following command after sourcing your workspace:
 ```
-roslaunch ompl_planners <your launch file>
+roslaunch planners <your launch file>
 ```
 **For example**
 ```
-roslaunch ompl_planners RRT.launch
+roslaunch planners RRT.launch
 ```
 
 ----
 ## Next Steps:
-1. Implement three separate packages for STOMP, CHOMP and Motion planning in microseconds.
+1. Implement CHOMP and Motion planning in microseconds.
 2. Update scene parsing to visualize dynamic obstacles
 3. Implement an independent package for metrics evaluation
