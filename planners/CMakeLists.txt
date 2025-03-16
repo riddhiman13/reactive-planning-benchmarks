@@ -222,3 +222,9 @@ target_link_libraries(stomp_planner
   yaml-cpp
   ${catkin_LIBRARIES} # Add this
 )
+
+add_executable(chomp_planner src/chomp_planner.cpp)
+target_link_libraries(chomp_planner
+  yaml-cpp
+  ${catkin_LIBRARIES} # Add this
+)
