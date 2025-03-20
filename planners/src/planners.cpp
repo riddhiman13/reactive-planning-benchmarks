@@ -53,18 +53,20 @@ int main(int argc, char** argv) {
 
     std::string planner_ID;
     std::string planning_pipeline;
-    
-    // 获取当前规划管道
-    if (ros::param::get("planning_pipeline", planning_pipeline)) {
+
+    if (ros::param::get("planning_pipeline", planning_pipeline)) 
+    {
         ROS_INFO("Using Planning Pipeline: %s", planning_pipeline.c_str());
-    } else {
+    } else 
+    {
         ROS_WARN("Failed to get 'planning_pipeline'. Defaulting to OMPL.");
-        planning_pipeline = "ompl"; // 默认使用 OMPL
+        planning_pipeline = "ompl"; 
     }
     
-    // 仅在 OMPL 时，设置 planner ID
+
     if (planning_pipeline == "ompl") {
-        if (ros::param::get("default_planner_config", planner_ID)) {
+        if (ros::param::get("default_planner_config", planner_ID)) 
+        {
             ROS_INFO("Using Planner: %s", planner_ID.c_str());
             move_group.setPlannerId(planner_ID);
         } else {
@@ -85,7 +87,8 @@ int main(int argc, char** argv) {
 
     ros::Rate rate(10);  
 
-    while (ros::ok()) {
+    while (ros::ok()) 
+    {
         ros::spinOnce();  
 
         if (goal_received) {
@@ -94,19 +97,19 @@ int main(int argc, char** argv) {
             moveit::planning_interface::MoveGroupInterface::Plan my_plan;
             bool success = false;
 
-            if (planning_pipeline == "ompl") {
-                // 使用 OMPL 进行规划
+            if (planning_pipeline == "ompl") 
+            {
+               
                 move_group.setPoseTarget(goal_pose);
                 success = (move_group.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
             } 
-            else if (planning_pipeline == "chomp") {
+            else if (planning_pipeline == "chomp") 
+            {
                 ROS_INFO("Using OMPL (RRTConnect) to generate initial trajectory for CHOMP...");
             
-                // **手动切换为 OMPL**
                 ros::param::set("/move_group/planning_pipeline", "ompl");
                 move_group.setPlannerId("RRTConnect");
-            
-                // 规划前等待参数生效
+                
                 ros::Duration(1.0).sleep();
             
                 moveit::planning_interface::MoveGroupInterface::Plan ompl_plan;
@@ -116,10 +119,11 @@ int main(int argc, char** argv) {
                 std::vector<double> goal_joint_positions;
                 bool success = false;
             
-                if (!ompl_success) {
+                if (!ompl_success) 
+                {
                     ROS_ERROR("OMPL failed. Trying to compute goal_joint_positions using IK...");
             
-                    // **使用 IK 计算 goal_pose 对应的关节角度**
+                    // IK 
                     robot_state::RobotState start_state(*move_group.getCurrentState());
                     bool found_ik = start_state.setFromIK(joint_model_group, goal_pose);
             
@@ -128,40 +132,43 @@ int main(int argc, char** argv) {
                     } else {
                         start_state.copyJointGroupPositions(joint_model_group, goal_joint_positions);
             
-                        // **打印 goal_joint_positions**
+                        
                         ROS_INFO("Goal Joint Positions from IK:");
-                        for (size_t i = 0; i < goal_joint_positions.size(); i++) {
+                        for (size_t i = 0; i < goal_joint_positions.size(); i++) 
+                        {
                             ROS_INFO("Joint[%zu]: %f", i, goal_joint_positions[i]);
                         }
                     }
                 } else {
                     ROS_INFO("OMPL (RRTConnect) generated initial trajectory. Passing to CHOMP...");
             
-                    // **从 OMPL 轨迹提取 goal_joint_positions**
-                    if (!ompl_plan.trajectory_.joint_trajectory.points.empty()) {
+                    
+                    if (!ompl_plan.trajectory_.joint_trajectory.points.empty()) 
+                    {
                         goal_joint_positions = ompl_plan.trajectory_.joint_trajectory.points.back().positions;
                         ROS_INFO("Goal Joint Positions extracted from OMPL:");
-                    } else {
+                    } else 
+                    {
                         ROS_WARN("OMPL trajectory is empty. Cannot extract goal joint positions.");
                     }
                 }
             
-                if (!goal_joint_positions.empty()) {
-                    // **手动切换回 CHOMP**
+                if (!goal_joint_positions.empty()) 
+                {
+                    
                     ros::param::set("/move_group/planning_pipeline", "chomp");
                     move_group.setPlannerId("chomp");
-            
-                    // 规划前等待参数生效
+                    
                     ros::Duration(1.0).sleep();
             
-                    // **让 CHOMP 处理关节空间目标**
                     move_group.setJointValueTarget(goal_joint_positions);
                     moveit::planning_interface::MoveGroupInterface::Plan my_plan;
                     success = (move_group.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
             
                     if (success) {
                         move_group.execute(my_plan);
-                    } else {
+                    } else 
+                    {
                         ROS_ERROR("CHOMP failed to generate a valid plan.");
                     }
                 } else {
@@ -173,12 +180,12 @@ int main(int argc, char** argv) {
             ROS_INFO("Planning %s", success ? "SUCCEEDED" : "FAILED");
 
             if (success) {
-                // 可视化
+                
                 visual_tools.publishTrajectoryLine(my_plan.trajectory_, move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP));
                 visual_tools.trigger();
                 visual_tools.prompt("Press 'next' in RViz to execute the motion");
 
-                // 执行规划
+                
                 move_group.execute(my_plan);
             }
 
