@@ -1,0 +1,20 @@
+<launch>
+    <!-- Launch the dynamic obstacle publisher -->
+    <include file="$(find robot_env_publisher)/launch/obstacles_publisher.launch"/>
+
+    <!-- Allow dynamic selection of the planning pipeline -->
+    <arg name="pipeline" default="ompl"/>  <!-- ompl, chomp, stomp -->
+    <arg name="ompl_planner" default="RRT"/> <!-- only when ompl -->
+
+    <!-- Launch MoveIt! demo with the selected pipeline -->
+    <include file="$(find panda_moveit_config)/launch/demo.launch">
+        <arg name="pipeline" value="$(arg pipeline)"/>
+        <arg name="ompl_planner" value="$(arg ompl_planner)"/>
+    </include>
+
+    <!-- Always launch planners.launch -->
+    <include file="$(find planners)/launch/planners.launch">
+        <arg name="pipeline" value="$(arg pipeline)"/>
+        <arg name="ompl_planner" value="$(arg ompl_planner)"/>
+    </include>
+</launch>

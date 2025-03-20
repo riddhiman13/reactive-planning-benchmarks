@@ -1,0 +1,15 @@
+<launch>
+    <arg name="pipeline" default="ompl"/>
+    <arg name="ompl_planner" default="RRT"/>
+
+    <!-- 设置规划管道 -->
+    <param name="planning_pipeline" value="$(arg pipeline)"/>
+
+    <!-- 如果是 OMPL，还要设置 planner -->
+    <group if="$(eval arg('pipeline') == 'ompl')">
+        <param name="default_planner_config" value="$(arg ompl_planner)"/>
+    </group>
+
+    <!-- 运行 planners 节点 -->
+    <node name="planners_node" pkg="planners" type="planners" output="screen"/>
+</launch>

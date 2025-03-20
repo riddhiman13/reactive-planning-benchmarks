@@ -1,3 +1,0 @@
-<launch>
-    <node name="stomp_planner" pkg="planners" type="stomp_planner" output="screen" />
-</launch>

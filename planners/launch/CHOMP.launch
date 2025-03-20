@@ -1,3 +1,0 @@
-<launch>
-    <node name="chomp_planner" pkg="planners" type="chomp_planner" output="screen" />
-</launch>

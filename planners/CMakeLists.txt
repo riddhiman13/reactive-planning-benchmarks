@@ -211,20 +211,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(ompl_planner src/ompl_planner.cpp)
-target_link_libraries(ompl_planner
+add_executable(planners src/planners.cpp)
+target_link_libraries(planners
   yaml-cpp
-  ${catkin_LIBRARIES} # Add this
-)
-
-add_executable(stomp_planner src/stomp_planner.cpp)
-target_link_libraries(stomp_planner
-  yaml-cpp
-  ${catkin_LIBRARIES} # Add this
-)
-
-add_executable(chomp_planner src/chomp_planner.cpp)
-target_link_libraries(chomp_planner
-  yaml-cpp
-  ${catkin_LIBRARIES} # Add this
+  ${catkin_LIBRARIES} 
 )
