@@ -1,0 +1,5 @@
+<launch>
+    <node name="joint_states_metrics" pkg="planners" type="metrics" output="screen"/>
+         <!-- Include robot_env_publisher launch file -->
+    <!--include file="$(find fliqc_controller_ros)/launch/sim_fliqc_joint_velocity_benchmark.launch"/-->
+</launch>

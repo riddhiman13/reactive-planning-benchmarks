@@ -216,3 +216,9 @@ target_link_libraries(planners
   yaml-cpp
   ${catkin_LIBRARIES} 
 )
+
+add_executable(metrics src/metrics_joint_state.cpp)
+target_link_libraries(metrics
+  yaml-cpp
+  ${catkin_LIBRARIES} 
+)

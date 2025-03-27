@@ -10,4 +10,5 @@
     </group>
 
     <node name="planners_node" pkg="planners" type="planners" output="screen"/>
+
 </launch>
